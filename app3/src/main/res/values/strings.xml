@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">YadSara</string>
+    <string name="title_home">My Calendar</string>
+    <string name="title_dashboard">Schedule Time</string>
+    <string name="title_notifications">Schedule Events</string>
+    <string name="textHome2">instructions.......</string>
+</resources>

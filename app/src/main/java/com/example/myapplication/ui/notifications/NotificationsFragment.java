@@ -52,11 +52,11 @@ public class NotificationsFragment extends Fragment {
         View.OnClickListener plusMonth = new View.OnClickListener() {
             public void onClick(View v) {
                 TextView textView3 = root.findViewById(R.id.ScheduleTime );
-                textView3.setText("asdasdasdasd");
+
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                     showing=showing.plusMonths(1);
 
-                    textView3.setText(showing.getMonth().toString()+showing.getYear()%100);
+                    textView3.setText(showing.getMonth().toString().substring(0,3)+showing.getYear()%100);
                 }
 
             }
@@ -65,11 +65,11 @@ public class NotificationsFragment extends Fragment {
         View.OnClickListener minusMonth = new View.OnClickListener() {
             public void onClick(View v) {
                 TextView textView3 = root.findViewById(R.id.ScheduleTime );
-                textView3.setText("asdasdasdasd");
+
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                     showing=showing.minusMonths(1);
 
-                    textView3.setText(showing.getMonth().toString()+showing.getYear()%100);
+                    textView3.setText(showing.getMonth().toString().substring(0,3)+showing.getYear()%100);
                 }
 
             }
@@ -83,7 +83,7 @@ public class NotificationsFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             now = LocalDateTime.now();
             showing=now;
-            textView2.setText(now.getMonth().toString()+now.getYear()%100);
+            textView2.setText(now.getMonth().toString().substring(0,3)+now.getYear()%100);
 
         }
 

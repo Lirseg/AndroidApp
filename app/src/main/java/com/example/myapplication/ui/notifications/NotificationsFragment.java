@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.notifications;
 
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -22,6 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class NotificationsFragment extends Fragment {
 
@@ -48,7 +51,7 @@ public class NotificationsFragment extends Fragment {
         TextView textView2 = root.findViewById(R.id.ScheduleTime );
 
 
-
+        // Add a month
         View.OnClickListener plusMonth = new View.OnClickListener() {
             public void onClick(View v) {
                 TextView textView3 = root.findViewById(R.id.ScheduleTime );
@@ -61,7 +64,7 @@ public class NotificationsFragment extends Fragment {
 
             }
         };
-
+        // reduce a month
         View.OnClickListener minusMonth = new View.OnClickListener() {
             public void onClick(View v) {
                 TextView textView3 = root.findViewById(R.id.ScheduleTime );
@@ -74,6 +77,12 @@ public class NotificationsFragment extends Fragment {
 
             }
         };
+
+        Button btn1 = root.findViewById(R.id.week1);
+        Button btn2 = root.findViewById(R.id.week2);
+        Button btn3 = root.findViewById(R.id.week3);
+        Button btn4 = root.findViewById(R.id.week4);
+        Button btn5 = root.findViewById(R.id.week5);
         // Find the ListView resource.
 //        mainListView = (ListView) root.findViewById( R.id.mainListView );
 //
@@ -84,14 +93,34 @@ public class NotificationsFragment extends Fragment {
             now = LocalDateTime.now();
             showing=now;
             textView2.setText(now.getMonth().toString().substring(0,3)+now.getYear()%100);
+            Calendar calendar = Calendar.getInstance();
+//            btn1.setText(String.valueOf(calendar.getActualMaximum(Calendar.WEEK_OF_MONTH)));
 
         }
 
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog alertDialog = new AlertDialog.Builder(root.getContext()).create();
+                alertDialog.setTitle("Alert");
+                alertDialog.setMessage("Alert message to be shown");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+            }
+        });
 
         FloatingActionButton fab = root.findViewById(R.id.floatingActionButton3);
         fab.setOnClickListener(plusMonth);
         FloatingActionButton fab2 = root.findViewById(R.id.floatingActionButton4);
         fab2.setOnClickListener(minusMonth);
+
+
+
 
 
 

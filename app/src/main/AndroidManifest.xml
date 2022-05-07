@@ -25,6 +25,12 @@
             android:exported="true">
 
         </activity>
+        <activity
+            android:name=".DB.NewEventActivity"
+            android:label="@string/app_name"
+            android:exported="true">
+
+        </activity>
     </application>
 
 </manifest>

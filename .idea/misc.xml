@@ -3,12 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Eitan/Desktop/AndroidApp-master/app/src/main/res/drawable-v24/ic_add_black_24dp.xml" value="0.1975" />
         <entry key="..\:/Users/Eitan/Desktop/AndroidApp-master/app/src/main/res/drawable/sample_icon.xml" value="0.2475" />
         <entry key="..\:/Users/Eitan/Desktop/AndroidApp-master/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/Eitan/Desktop/AndroidApp-master/app/src/main/res/layout/activity_new_event.xml" value="0.33" />
+        <entry key="..\:/Users/Eitan/Desktop/AndroidApp-master/app/src/main/res/layout/content_main.xml" value="0.18" />
+        <entry key="..\:/Users/Eitan/Desktop/AndroidApp-master/app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
         <entry key="..\:/Users/Eitan/Desktop/AndroidApp-master/app/src/main/res/layout/fragment_home.xml" value="0.24818840579710144" />
         <entry key="..\:/Users/Eitan/Desktop/AndroidApp-master/app/src/main/res/layout/fragment_notifications.xml" value="0.22" />
+        <entry key="..\:/Users/Eitan/Desktop/AndroidApp-master/app/src/main/res/layout/recyclerview_item.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/Eitan/Desktop/AndroidApp-master/app/src/main/res/layout/simplerow.xml" value="0.22291666666666668" />
         <entry key="..\:/Users/Eitan/Desktop/AndroidApp-master/app/src/main/res/menu/bottom_nav_menu.xml" value="0.22395833333333334" />
+        <entry key="..\:/Users/Eitan/Desktop/AndroidApp-master/app/src/main/res/menu/main.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyApplication2/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.180078125" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyApplication2/app/src/main/res/layout/activity_login.xml" value="0.20878623188405798" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyApplication2/app/src/main/res/layout/activity_main.xml" value="0.146875" />

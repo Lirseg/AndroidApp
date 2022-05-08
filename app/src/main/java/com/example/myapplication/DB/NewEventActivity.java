@@ -30,14 +30,26 @@ public class NewEventActivity extends AppCompatActivity {
         mEditEventView4 = findViewById(R.id.plain_text_input17);
         mEditEventView5 = findViewById(R.id.plain_text_input18);
 
+
+
         final Button button = findViewById(R.id.button11);
         button.setOnClickListener(view -> {
+
             Intent replyIntent = new Intent();
             if (TextUtils.isEmpty(mEditEventView1.getText().toString())) {
                 setResult(RESULT_CANCELED, replyIntent);
             } else {
+
                 String eventName = mEditEventView1.getText().toString();
-                replyIntent.putExtra(EXTRA_REPLY, eventName);
+                String eventDate = mEditEventView2.getText().toString();
+                String eventFrom = mEditEventView3.getText().toString();
+                String eventTo = mEditEventView4.getText().toString();
+                String eventNeeded = mEditEventView5.getText().toString();
+                replyIntent.putExtra("EVENTNAME", eventName);
+                replyIntent.putExtra("EVENTDATE", eventDate);
+                replyIntent.putExtra("EVENTFROM", eventFrom);
+                replyIntent.putExtra("EVENTTO", eventTo);
+                replyIntent.putExtra("EVENTNEEDED", eventNeeded);
                 setResult(RESULT_OK, replyIntent);
             }
             finish();

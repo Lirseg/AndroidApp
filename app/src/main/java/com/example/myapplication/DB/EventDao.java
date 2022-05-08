@@ -14,9 +14,14 @@ public interface EventDao {
     @Query("SELECT * FROM event_tbl")
     LiveData<List<Event>> getEvents();
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Event event);
 
     @Query("DELETE FROM event_tbl")
     void deleteAll();
+
+    @Query("DELETE FROM event_tbl WHERE eventName==:eventName ")
+    void remove(String eventName);
+
+
 }

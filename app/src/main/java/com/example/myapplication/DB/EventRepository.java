@@ -34,4 +34,10 @@ public class EventRepository {
             mEventDao.insert(event);
         });
     }
+
+    void remove(String name) {
+        EventRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mEventDao.remove(name);
+        });
+    }
 }

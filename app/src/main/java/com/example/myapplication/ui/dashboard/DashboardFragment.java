@@ -30,12 +30,18 @@ public class DashboardFragment extends Fragment {
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
 
-    private EventViewModel mEventViewModel;
+    public EventViewModel mEventViewModel;
 
     private FragmentDashboardBinding binding;
 
+
+
+
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+
         DashboardViewModel dashboardViewModel =
                 new ViewModelProvider(this).get(DashboardViewModel.class);
 
@@ -43,16 +49,21 @@ public class DashboardFragment extends Fragment {
         View root = binding.getRoot();
 
         RecyclerView recyclerView = root.findViewById(R.id.recyclerview);
-        final EventListAdapter adapter = new EventListAdapter(new EventListAdapter.EventDiff());
+        final EventListAdapter adapter = new EventListAdapter(new EventListAdapter.EventDiff(),getActivity(),root);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+
+
         // Get a new or existing ViewModel from the ViewModelProvider.
+
         mEventViewModel = new ViewModelProvider(this).get(EventViewModel.class);
+
 
         // Add an observer on the LiveData returned by getAlphabetizedWords.
         // The onChanged() method fires when the observed data changes and the activity is
         // in the foreground.
+
         mEventViewModel.getAllEvents().observe(getViewLifecycleOwner(), events -> {
             // Update the cached copy of the words in the adapter.
             adapter.submitList(events);
@@ -60,6 +71,7 @@ public class DashboardFragment extends Fragment {
 
         FloatingActionButton fab = root.findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
+
             Intent intent = new Intent(root.getContext(), NewEventActivity.class);
             startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
         });
@@ -78,11 +90,14 @@ public class DashboardFragment extends Fragment {
         binding = null;
     }
 
+
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Event event = new Event(data.getStringExtra(NewEventActivity.EXTRA_REPLY),"s","s","s","s");
+            Event event = new Event(data.getStringExtra("EVENTNAME"),data.getStringExtra("EVENTDATE"),data.getStringExtra("EVENTFROM"),data.getStringExtra("EVENTTO"),data.getStringExtra("EVENTNEEDED"));
             mEventViewModel.insert(event);
         } else {
             Toast.makeText(

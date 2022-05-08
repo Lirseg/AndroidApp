@@ -1,5 +1,7 @@
 package com.example.myapplication.DB;
 
+import android.app.Activity;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -7,8 +9,13 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
 public class EventListAdapter extends ListAdapter<Event, EventViewHolder> {
-    public EventListAdapter(@NonNull DiffUtil.ItemCallback<Event> diffCallback) {
+    private Activity a;
+    private View root;
+
+    public EventListAdapter(@NonNull DiffUtil.ItemCallback<Event> diffCallback, Activity a, View root) {
         super(diffCallback);
+        this.a = a;
+        this.root = root;
     }
 
     @Override
@@ -19,7 +26,15 @@ public class EventListAdapter extends ListAdapter<Event, EventViewHolder> {
     @Override
     public void onBindViewHolder(EventViewHolder holder, int position) {
         Event current = getItem(position);
-        holder.bind(current.getEventName());
+        holder.bindName(current.getEventName());
+        holder.bindDate(current.getEventDate());
+        holder.bindFrom(current.getEventTimeFrom());
+        holder.bindTo(current.getEventTimeTo());
+        holder.bindNeeded(current.getNeeded());
+        holder.bindRmv(current.getEventName(), a );
+        holder.bindEdit(current.getEventName(),current.getEventDate(),current.getEventTimeFrom(),current.getEventTimeTo(),current.getNeeded(), a,root );
+
+
     }
 
     public static class EventDiff extends DiffUtil.ItemCallback<Event> {

@@ -41,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
 
+        Bundle extras = getIntent().getExtras();
+
+
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -50,6 +54,22 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+        if (extras != null) {
+            String value = extras.getString("userIs");
+            //The key argument here must match that used in the other activity
+
+            if (value.equals("admin" )){
+                navView.getMenu().findItem(R.id.navigation_notifications).setVisible(false);
+
+            }else{
+                navView.getMenu().findItem(R.id.navigation_dashboard).setVisible(false);
+
+            }
+        }
+
+
+
 
 
 

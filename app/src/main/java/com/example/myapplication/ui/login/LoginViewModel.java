@@ -29,15 +29,19 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    public void login(String username, String password) {
+    public String login(String username, String password) {
         // can be launched in a separate asynchronous job
         Result<LoggedInUser> result = loginRepository.login(username, password);
 
         if (result instanceof Result.Success) {
             LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
             loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
+            if(data.getDisplayName().equals("Welcome Admin"))
+                return "admin";
+            else return "user";
         } else {
             loginResult.setValue(new LoginResult(R.string.login_failed));
+            return "fail";
         }
     }
 

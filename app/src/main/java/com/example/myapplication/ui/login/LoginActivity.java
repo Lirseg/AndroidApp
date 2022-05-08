@@ -28,6 +28,7 @@ import com.example.myapplication.ui.login.LoginViewModel;
 import com.example.myapplication.ui.login.LoginViewModelFactory;
 import com.example.myapplication.databinding.ActivityLoginBinding;
 import com.example.myapplication.MainActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -35,8 +36,9 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
 
 
-    private void switchActivities(){
+    private void switchActivities(String user){
         Intent sai = new Intent(getApplicationContext(), MainActivity.class);
+        sai.putExtra("userIs",user);
         startActivity(sai);
     }
 
@@ -126,9 +128,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
+                String s = loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
-                switchActivities();
+                switchActivities(s);
             }
         });
     }

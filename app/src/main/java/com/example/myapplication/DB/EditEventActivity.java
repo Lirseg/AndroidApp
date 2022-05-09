@@ -1,11 +1,18 @@
 package com.example.myapplication.DB;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
@@ -33,6 +40,12 @@ public class EditEventActivity extends AppCompatActivity {
         mEditEventView4 = findViewById(R.id.plain_text_input117);
         mEditEventView5 = findViewById(R.id.plain_text_input118);
 
+        // calling the action bar
+        ActionBar actionBar = getSupportActionBar();
+
+        // showing the back button in action bar
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
 
         mEditEventView1.setText(getIntent().getExtras().getString("Name"));
@@ -42,33 +55,51 @@ public class EditEventActivity extends AppCompatActivity {
         mEditEventView5.setText(getIntent().getExtras().getString("Needed"));
 
         mEditEventView1.setEnabled(false);
+        Activity activity = this;
 
-        final Button button = findViewById(R.id.editBtn1);
-        button.setOnClickListener(view -> {
-//            Intent replyIntent = new Intent();
+        DialogInterface.OnClickListener ocl;
+        ocl = new DialogInterface.OnClickListener() {
 
 
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
                 String eventName = mEditEventView1.getText().toString();
-
                 String eventDate = mEditEventView2.getText().toString();
                 String eventFrom = mEditEventView3.getText().toString();
                 String eventTo = mEditEventView4.getText().toString();
                 String eventNeeded = mEditEventView5.getText().toString();
-//                replyIntent.putExtra("EVENTNAME", eventName);
-//                replyIntent.putExtra("EVENTDATE", eventDate);
-//                replyIntent.putExtra("EVENTFROM", eventFrom);
-//                replyIntent.putExtra("EVENTTO", eventTo);
-//                replyIntent.putExtra("EVENTNEEDED", eventNeeded);
-//                setResult(666, replyIntent);
+                mEventViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(EventViewModel.class);
 
+                Event event = new Event(eventName,eventDate,eventFrom,eventTo,eventNeeded);
+                mEventViewModel.insert(event);
+                actionBar.setDisplayHomeAsUpEnabled(false);
+                finish();
+            }
+        };
 
-            mEventViewModel = new ViewModelProvider((ViewModelStoreOwner) this).get(EventViewModel.class);
-
-            Event event = new Event(eventName,eventDate,eventFrom,eventTo,eventNeeded);
-            mEventViewModel.insert(event);
-
-            finish();
+        final Button button = findViewById(R.id.editBtn1);
+        button.setOnClickListener(view -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Alert!");
+            builder.setMessage("Would you like to edit this event?");
+            // add the buttons
+            builder.setPositiveButton("Continue",  ocl);
+            builder.setNegativeButton("Cancel", null);
+            // create and show the alert dialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

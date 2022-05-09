@@ -3,12 +3,14 @@ package com.example.myapplication.DB;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
@@ -64,15 +66,39 @@ public class EventViewHolder extends RecyclerView.ViewHolder{
     public void bindNeeded(String text) {
         eventNeeded.setText(text);
     }
+
+
     public void bindRmv(String text,Activity a) {
+
+        DialogInterface.OnClickListener ocl;
+        ocl = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                mEventViewModel = new ViewModelProvider((ViewModelStoreOwner) a).get(EventViewModel.class);
+                mEventViewModel.remove(text);
+            }
+        };
 
         rmvBtn.setOnClickListener(new View.OnClickListener() {
 
-            @Override
 
+
+            @Override
             public void onClick(View view) {
-                mEventViewModel = new ViewModelProvider((ViewModelStoreOwner) a).get(EventViewModel.class);
-                mEventViewModel.remove(text);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(a);
+                builder.setTitle("Alert!");
+                builder.setMessage("Would you like to remove this event?");
+                // add the buttons
+                builder.setPositiveButton("Continue",  ocl);
+                builder.setNegativeButton("Cancel", null);
+                // create and show the alert dialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+
+
+
 
             }
         });

@@ -18,7 +18,7 @@ public class LoginDataSource {
             // TODO: handle loggedInUser authentication
             LoggedInUser admin = null;
 
-            if (username.equals("11") && password.equals("123456")){
+            if (username.equals("admin1") && password.equals("admin1")){
                 admin =
                         new LoggedInUser(
                                 java.util.UUID.randomUUID().toString(),

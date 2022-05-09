@@ -12,6 +12,7 @@ import com.example.myapplication.DB.EventViewModel;
 import com.example.myapplication.DB.NewEventActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -42,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
 
         Bundle extras = getIntent().getExtras();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+
 
 
 
@@ -98,10 +102,16 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "signOut Clicked", Toast.LENGTH_SHORT).show();
                 break;
         }
+        switch (item.getItemId()) {
+            case android.R.id.home:
+
+                return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
 
-
-
 }
+
+
+

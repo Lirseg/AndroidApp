@@ -25,9 +25,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.databinding.ActivityMainBinding;
 import com.example.myapplication.DB.EventListAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity {
 
-
+    private FirebaseAuth mAuth;
 
     private EventViewModel mEventViewModel;
 
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -99,7 +102,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Refresh Clicked", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.signOut:
+                mAuth.signOut();
+
                 Toast.makeText(this, "signOut Clicked", Toast.LENGTH_SHORT).show();
+                super.onBackPressed();
                 break;
         }
         switch (item.getItemId()) {

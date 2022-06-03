@@ -24,9 +24,11 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.FireBaseFireStore.DocSnippets;
 import com.example.myapplication.R;
 import com.example.myapplication.ui.login.LoginViewModel;
 import com.example.myapplication.ui.login.LoginViewModelFactory;
@@ -38,6 +40,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -51,8 +54,37 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(sai);
     }
 
+    public void onRadioButtonClicked(View view ) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.LogInSwitch:
+                if (checked)
+                    this.binding.login.setVisibility(View.VISIBLE);
+                    this.binding.username.setVisibility(View.VISIBLE);
+                    this.binding.password.setVisibility(View.VISIBLE);
+
+                    this.binding.City.setVisibility(View.INVISIBLE);
+                    this.binding.signUpBtn.setVisibility(View.INVISIBLE);
+                    break;
+            case R.id.SignUpSwitch:
+                if (checked)
+                    this.binding.login.setVisibility(View.INVISIBLE);
+
+                    this.binding.username.setVisibility(View.VISIBLE);
+                    this.binding.password.setVisibility(View.VISIBLE);
+                    this.binding.City.setVisibility(View.VISIBLE);
+                    this.binding.signUpBtn.setVisibility(View.VISIBLE);
+                    break;
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
 
@@ -65,7 +97,14 @@ public class LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = binding.username;
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.login;
+        final Button SignUpButton = binding.signUpBtn;
         final ProgressBar loadingProgressBar = binding.loading;
+        final EditText cityText = binding.City;
+        loginButton.setVisibility(View.INVISIBLE);
+        SignUpButton.setVisibility(View.INVISIBLE);
+        usernameEditText.setVisibility(View.INVISIBLE);
+        passwordEditText.setVisibility(View.INVISIBLE);
+        cityText.setVisibility(View.INVISIBLE);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -144,7 +183,19 @@ public class LoginActivity extends AppCompatActivity {
 //                switchActivities();
             }
         });
+        SignUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadingProgressBar.setVisibility(View.VISIBLE);
+//                String s = loginViewModel.login(usernameEditText.getText().toString(),
+//                        passwordEditText.getText().toString());
+                createAccount(usernameEditText.getText().toString(),passwordEditText.getText().toString());
+//                switchActivities();
+            }
+        });
     }
+
+
 
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
@@ -170,6 +221,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) {
         if (user!=null){
+            DocSnippets.addUser(this.binding.username.getText().toString(),this.binding.City.getText().toString());
             switchActivities();
         }else{
             reload();

@@ -20,10 +20,12 @@ import com.example.myapplication.DB.Event;
 import com.example.myapplication.DB.EventListAdapter;
 import com.example.myapplication.DB.EventViewModel;
 import com.example.myapplication.DB.NewEventActivity;
+import com.example.myapplication.FireBaseFireStore.DocSnippets;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentDashboardBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class DashboardFragment extends Fragment {
 
@@ -73,6 +75,7 @@ public class DashboardFragment extends Fragment {
         fab.setOnClickListener(view -> {
 
             Intent intent = new Intent(root.getContext(), NewEventActivity.class);
+
             startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
         });
 
@@ -99,6 +102,7 @@ public class DashboardFragment extends Fragment {
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             Event event = new Event(data.getStringExtra("EVENTNAME"),data.getStringExtra("EVENTDATE"),data.getStringExtra("EVENTFROM"),data.getStringExtra("EVENTTO"),data.getStringExtra("EVENTNEEDED"));
             mEventViewModel.insert(event);
+            DocSnippets.addEvent(data.getStringExtra("EVENTNAME"),data.getStringExtra("EVENTDATE"),data.getStringExtra("EVENTFROM"),data.getStringExtra("EVENTTO"),data.getStringExtra("EVENTNEEDED"));
         } else {
             Toast.makeText(
                     getContext(),

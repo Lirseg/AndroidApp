@@ -5,6 +5,8 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.myapplication.FireBaseFireStore.DocSnippets;
+
 import java.util.List;
 
 public class EventViewModel extends AndroidViewModel {

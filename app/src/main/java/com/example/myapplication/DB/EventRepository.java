@@ -4,6 +4,8 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.myapplication.FireBaseFireStore.DocSnippets;
+
 import java.util.List;
 
 public class EventRepository {
@@ -19,6 +21,7 @@ public class EventRepository {
         EventRoomDatabase db = EventRoomDatabase.getDatabase(application);
         mEventDao = db.eventDao();
         mAllEvents = mEventDao.getEvents();
+
     }
 
     // Room executes all queries on a separate thread.

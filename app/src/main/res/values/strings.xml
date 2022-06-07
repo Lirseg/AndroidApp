@@ -18,5 +18,6 @@
     <string name="textHome2">instructions.......</string>
     <string name="empty_not_saved">Word not saved because it is empty.</string>
     <string name="add_event">Add event</string>
+    <string name="string_texthome2">instructions///</string>
 
 </resources>

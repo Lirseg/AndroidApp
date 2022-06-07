@@ -213,15 +213,16 @@ public class LoginActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            updateUI(currentUser);
+            updateUI(currentUser, false);
         }
     }
 
     private void reload() { }
 
-    private void updateUI(FirebaseUser user) {
+    private void updateUI(FirebaseUser user, Boolean newUser) {
         if (user!=null){
-            DocSnippets.addUser(this.binding.username.getText().toString(),this.binding.City.getText().toString());
+            if(newUser)
+                DocSnippets.addUser(this.binding.username.getText().toString(),this.binding.City.getText().toString());
             switchActivities();
         }else{
             reload();
@@ -242,13 +243,13 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(LoginActivity.this, "Authentication SUCCESS BIATCH.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(user);
+                            updateUI(user, true);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+                            updateUI(null, false);
                         }
                     }
                 });
@@ -265,13 +266,13 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            updateUI(user, false);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+                            updateUI(null, false);
                         }
                     }
                 });

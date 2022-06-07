@@ -1,9 +1,11 @@
 package com.example.myapplication.ui.dashboard;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,8 +68,11 @@ public class DashboardFragment extends Fragment {
         // The onChanged() method fires when the observed data changes and the activity is
         // in the foreground.
 
+
+
         mEventViewModel.getAllEvents().observe(getViewLifecycleOwner(), events -> {
             // Update the cached copy of the words in the adapter.
+
             adapter.submitList(events);
         });
 

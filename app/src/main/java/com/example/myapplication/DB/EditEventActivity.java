@@ -1,6 +1,8 @@
 package com.example.myapplication.DB;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +10,9 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -17,7 +21,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
+import com.example.myapplication.FireBaseFireStore.DocSnippets;
 import com.example.myapplication.R;
+
+import java.util.Calendar;
 
 public class EditEventActivity extends AppCompatActivity {
 
@@ -29,6 +36,13 @@ public class EditEventActivity extends AppCompatActivity {
     private EditText mEditEventView4;
     private EditText mEditEventView5;
     private EventViewModel mEventViewModel;
+    DatePickerDialog datePickerDialog;
+    TimePickerDialog timePickerDialog;
+    private int mYear, mMonth, mDay, mHour, mMinute;
+    int year;
+    int month;
+    int dayOfMonth;
+    Calendar calendar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +53,68 @@ public class EditEventActivity extends AppCompatActivity {
         mEditEventView3 = findViewById(R.id.plain_text_input116);
         mEditEventView4 = findViewById(R.id.plain_text_input117);
         mEditEventView5 = findViewById(R.id.plain_text_input118);
+        Button btn = findViewById(R.id.button101);
+        Button btn2 = findViewById(R.id.button21);
+        Button btn3 = findViewById(R.id.button31);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calendar = Calendar.getInstance();
+                year = calendar.get(Calendar.YEAR);
+                month = calendar.get(Calendar.MONTH);
+                dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                datePickerDialog = new DatePickerDialog(EditEventActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                                mEditEventView2.setText(day + "\\" + (month + 1) + "\\" + year);
+                            }
+                        }, year, month, dayOfMonth);
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+                datePickerDialog.show();
+            }
+        });
+
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calendar = Calendar.getInstance();
+                year = calendar.get(Calendar.YEAR);
+                month = calendar.get(Calendar.MONTH);
+                dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                timePickerDialog = new TimePickerDialog(EditEventActivity.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                                if(hourOfDay<10)
+                                    hourOfDay=0+hourOfDay;
+                                if(minute<10)
+                                    minute=0+minute;
+                                mEditEventView3.setText(String.format("%02d:%02d", hourOfDay, minute));
+                            }
+                        }, mHour, mMinute, false);
+                timePickerDialog.show();
+            }
+        });
+
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calendar = Calendar.getInstance();
+                year = calendar.get(Calendar.YEAR);
+                month = calendar.get(Calendar.MONTH);
+                dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                timePickerDialog = new TimePickerDialog(EditEventActivity.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                                mEditEventView4.setText(String.format("%02d:%02d", hourOfDay, minute));
+                            }
+                        }, mHour, mMinute, false);
+                timePickerDialog.show();
+            }
+        });
 
         // calling the action bar
         ActionBar actionBar = getSupportActionBar();
@@ -73,6 +149,7 @@ public class EditEventActivity extends AppCompatActivity {
                 Event event = new Event(eventName,eventDate,eventFrom,eventTo,eventNeeded);
                 mEventViewModel.insert(event);
                 actionBar.setDisplayHomeAsUpEnabled(false);
+                DocSnippets.editEvent(eventName,eventDate,eventFrom,eventTo,eventNeeded);
                 finish();
             }
         };

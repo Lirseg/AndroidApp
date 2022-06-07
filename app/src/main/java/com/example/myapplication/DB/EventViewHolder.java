@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.FireBaseFireStore.DocSnippets;
 import com.example.myapplication.R;
 import com.example.myapplication.ui.dashboard.DashboardFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -76,6 +77,8 @@ public class EventViewHolder extends RecyclerView.ViewHolder{
             public void onClick(DialogInterface dialogInterface, int i) {
                 mEventViewModel = new ViewModelProvider((ViewModelStoreOwner) a).get(EventViewModel.class);
                 mEventViewModel.remove(text);
+
+                DocSnippets.remove_event(text);
             }
         };
 

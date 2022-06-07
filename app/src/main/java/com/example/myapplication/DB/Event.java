@@ -15,6 +15,9 @@ public class Event {
         public String getEventName() {
             return mEventName;
         }
+
+
+
         public void setEventName(@NonNull String mEventName) {
             this.mEventName = mEventName;
         }

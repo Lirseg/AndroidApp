@@ -84,7 +84,7 @@ public class NewEventActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                                mEditEventView2.setText(day + "/" + (month + 1) + "/" + year);
+                                mEditEventView2.setText(day + "\\" + (month + 1) + "\\" + year);
                             }
                         }, year, month, dayOfMonth);
                 datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());

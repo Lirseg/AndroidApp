@@ -2,7 +2,9 @@ package com.example.myapplication.FireBaseFireStore;
 
 import static android.content.ContentValues.TAG;
 
+import android.graphics.Color;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -13,6 +15,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -85,12 +88,13 @@ public class DocSnippets {
         // [START add_ada_lovelace]
         // Create a new user with a first and last name
         Map<String, Object> user = new HashMap<>();
-
+        List<String> group = new ArrayList<>();
         user.put("name", name);
         user.put("peopleNeeded", peopleNeeded);
         user.put("date", date);
         user.put("startTime", startTime);
         user.put("endTime", finishTime);
+        user.put("signedVolun",group);
 
 
         // Add a new document with a generated ID
@@ -122,6 +126,25 @@ public class DocSnippets {
         l=eventList;
 
     }
+
+    public static boolean isEventFull(String name, TextView t) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Boolean result = false;
+        db.collection("events").document(name).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                String x = task.getResult().getData().get("peopleNeeded").toString();
+                List<String> group = (List<String>) task.getResult().getData().get("signedVolun");
+
+                System.out.println(group.size());
+
+                if(Integer.parseInt(x) <= group.size())
+                    t.setTextColor(Color.parseColor("#228B22") );
+            }
+        });
+    return result;
+    }
+
 
 
     public void updateList(List list){
@@ -224,23 +247,32 @@ public class DocSnippets {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Map<String, Object> user = new HashMap<>();
 
-        user.put("name", name);
-        user.put("peopleNeeded", peopleNeeded);
-        user.put("date", date);
-        user.put("startTime", startTime);
-        user.put("endTime", finishTime);
-        db.collection("events").document(name).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("events").document(name).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "DocumentSnapshot added with ID: " );
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                List<String> list = (List<String>) task.getResult().getData().get("signedVolun");
+                user.put("name", name);
+                user.put("peopleNeeded", peopleNeeded);
+                user.put("date", date);
+                user.put("startTime", startTime);
+                user.put("endTime", finishTime);
+                user.put("signedVolun",list );
+                db.collection("events").document(name).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " );
                     }
-                });
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error adding document", e);
+                            }
+                        });
+            }
+        });
+
+
 
     }
 

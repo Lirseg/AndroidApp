@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
@@ -69,6 +71,10 @@ public class EventViewHolder extends RecyclerView.ViewHolder{
         eventTo.setText(text);
     }
     public void bindNeeded(String text) {
+        if (DocSnippets.isEventFull(eventName.getText().toString(),eventNeeded))
+            eventNeeded.setTextColor(Color.GREEN);
+        else
+            eventNeeded.setTextColor(Color.RED);
         eventNeeded.setText(text);
     }
 

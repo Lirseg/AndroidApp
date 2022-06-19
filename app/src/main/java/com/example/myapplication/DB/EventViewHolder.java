@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.FireBaseFireStore.DocSnippets;
 import com.example.myapplication.R;
 import com.example.myapplication.ui.dashboard.DashboardFragment;
+import com.example.myapplication.ui.dashboard.Schedule;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class EventViewHolder extends RecyclerView.ViewHolder{
@@ -31,6 +33,7 @@ public class EventViewHolder extends RecyclerView.ViewHolder{
     private final AppCompatImageButton rmvBtn ;
     private final AppCompatImageButton editBtn;
     private EventViewModel mEventViewModel;
+    private final ConstraintLayout container;
 
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
@@ -46,6 +49,7 @@ public class EventViewHolder extends RecyclerView.ViewHolder{
         eventNeeded = itemView.findViewById(R.id.textNeeded);
         rmvBtn = itemView.findViewById(R.id.rmvBtn);
         editBtn = itemView.findViewById(R.id.editBtn);
+        container = itemView.findViewById(R.id.containerID);
 
 
     }
@@ -121,6 +125,15 @@ public class EventViewHolder extends RecyclerView.ViewHolder{
 
 
     }
+    public void bindSchedule(View root,Activity a){
+        container.setOnClickListener(view -> {
+            Intent intent = new Intent(root.getContext(), Schedule.class);
+            a.startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
+
+        });
+    }
+
+
 
 
 

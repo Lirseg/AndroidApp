@@ -1,5 +1,7 @@
 package com.example.myapplication.ui.notifications;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,18 +10,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.myapplication.DB.EditEventActivity;
+import com.example.myapplication.DB.EventViewModel;
+import com.example.myapplication.FireBaseFireStore.DocSnippets;
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentNotificationsBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 import java.time.LocalDateTime;
@@ -36,6 +46,20 @@ public class NotificationsFragment extends Fragment {
 
 
     private FragmentNotificationsBinding binding;
+    private EditText mEditEventView1;
+    private EditText mEditEventView2;
+    private EditText mEditEventView3;
+    private EditText mEditEventView4;
+    private EditText mEditEventView5;
+    private EventViewModel mEventViewModel;
+    DatePickerDialog datePickerDialog;
+    TimePickerDialog timePickerDialog;
+    private int mYear, mMonth, mDay, mHour, mMinute;
+    int year;
+    int month;
+    int dayOfMonth;
+    Calendar calendar;
+    private FirebaseAuth mAuth;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,110 +70,94 @@ public class NotificationsFragment extends Fragment {
 
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        mEditEventView3 = root.findViewById(R.id.userScheduleDateTxt);
+        mEditEventView4 = root.findViewById(R.id.userScheduleSTimeTxt);
+        mEditEventView5 = root.findViewById(R.id.userScheduleFTimeTxt);
+        Button btn = root.findViewById(R.id.userScheduleDateBtn);
+        Button btn2 = root.findViewById(R.id.userScheduleSTimeBtn);
+        Button btn3 = root.findViewById(R.id.userScheduleFTimeBtn);
+        Button btn4 = root.findViewById(R.id.userScheduleConfirmBtn);
 
-        final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
-        TextView textView2 = root.findViewById(R.id.ScheduleTime );
 
 
-
-
-        // Add a month
-        View.OnClickListener plusMonth = new View.OnClickListener() {
-            public void onClick(View v) {
-                TextView textView3 = root.findViewById(R.id.ScheduleTime );
-
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                    showing=showing.plusMonths(1);
-
-                    textView3.setText(showing.getMonth().toString().substring(0,3)+showing.getYear()%100);
-                }
-
-            }
-        };
-        // reduce a month
-        View.OnClickListener minusMonth = new View.OnClickListener() {
-            public void onClick(View v) {
-                TextView textView3 = root.findViewById(R.id.ScheduleTime );
-
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                    showing=showing.minusMonths(1);
-
-                    textView3.setText(showing.getMonth().toString().substring(0,3)+showing.getYear()%100);
-                }
-
-            }
-        };
-
-        Button btn1 = root.findViewById(R.id.week1);
-        Button btn2 = root.findViewById(R.id.week2);
-        Button btn3 = root.findViewById(R.id.week3);
-        Button btn4 = root.findViewById(R.id.week4);
-        Button btn5 = root.findViewById(R.id.week5);
-        // Find the ListView resource.
-//        mainListView = (ListView) root.findViewById( R.id.mainListView );
-//
-//        // Create and populate a List of  data.
-//        ArrayList<String> dataList = new ArrayList<String>();
-        LocalDateTime now = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            now = LocalDateTime.now();
-            showing=now;
-            textView2.setText(now.getMonth().toString().substring(0,3)+now.getYear()%100);
-            Calendar calendar = Calendar.getInstance();
-//            btn1.setText(String.valueOf(calendar.getActualMaximum(Calendar.WEEK_OF_MONTH)));
-
-        }
-
-        btn1.setOnClickListener(new View.OnClickListener() {
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog alertDialog = new AlertDialog.Builder(root.getContext()).create();
-                alertDialog.setTitle("Alert");
-                alertDialog.setMessage("Alert message to be shown");
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
+                calendar = Calendar.getInstance();
+                year = calendar.get(Calendar.YEAR);
+                month = calendar.get(Calendar.MONTH);
+                dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                datePickerDialog = new DatePickerDialog(root.getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                                mEditEventView3.setText(day + "\\" + (month + 1) + "\\" + year);
                             }
-                        });
-                alertDialog.show();
+                        }, year, month, dayOfMonth);
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+                datePickerDialog.show();
+            }
+        });
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calendar = Calendar.getInstance();
+                year = calendar.get(Calendar.YEAR);
+                month = calendar.get(Calendar.MONTH);
+                dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                timePickerDialog = new TimePickerDialog(root.getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                                if(hourOfDay<10)
+                                    hourOfDay=0+hourOfDay;
+                                if(minute<10)
+                                    minute=0+minute;
+                                mEditEventView4.setText(String.format("%02d:%02d", hourOfDay, minute));
+                            }
+                        }, mHour, mMinute, false);
+                timePickerDialog.show();
+            }
+        });
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calendar = Calendar.getInstance();
+                year = calendar.get(Calendar.YEAR);
+                month = calendar.get(Calendar.MONTH);
+                dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                timePickerDialog = new TimePickerDialog(root.getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                                mEditEventView5.setText(String.format("%02d:%02d", hourOfDay, minute));
+                            }
+                        }, mHour, mMinute, false);
+                timePickerDialog.show();
             }
         });
 
-        FloatingActionButton fab = root.findViewById(R.id.floatingActionButton3);
-        fab.setOnClickListener(plusMonth);
-        FloatingActionButton fab2 = root.findViewById(R.id.floatingActionButton4);
-        fab2.setOnClickListener(minusMonth);
+        btn4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth user = FirebaseAuth.getInstance();
+                System.out.println(( !mEditEventView4.getText().toString().isEmpty() && !mEditEventView3.getText().toString().isEmpty() && !mEditEventView5.getText().toString().isEmpty()));
+                if( !mEditEventView4.getText().toString().isEmpty() && !mEditEventView3.getText().toString().isEmpty() && !mEditEventView5.getText().toString().isEmpty()) {
+                    System.out.println("in");
+                    DocSnippets.userScheduleTime(user.getUid(), mEditEventView3.getText().toString(),
+                            mEditEventView4.getText().toString(), mEditEventView5.getText().toString());
+                    mEditEventView3.setText("");
+                    mEditEventView4.setText("");
+                    mEditEventView5.setText("");
+
+                }
+            }
+        });
 
 
 
 
 
-
-
-
-//        int workweek =0;
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            workweek = (now.toLocalDate().getDayOfYear() / 7) +1;
-//        }
-//
-//        for (int i =0; i<52 ;i++){
-//            if(workweek>52)
-//                workweek-=52;
-//            dataList.add(String.valueOf(workweek));
-//            workweek++;
-//        }
-//
-//
-//
-//        // Create ArrayAdapter using the data list.
-//        listAdapter = new ArrayAdapter<String>(getContext(), R.layout.simplerow, dataList);
-//
-//        // Set the ArrayAdapter as the ListView's adapter.
-//        mainListView.setAdapter( listAdapter );
 
         return root;
     }

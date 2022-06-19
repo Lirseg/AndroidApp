@@ -48,9 +48,9 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     private FirebaseAuth mAuth;
 
-    private void switchActivities(){
+    private void switchActivities(Boolean admin){
         Intent sai = new Intent(getApplicationContext(), MainActivity.class);
-//        sai.putExtra("userIs",user);
+        sai.putExtra("admin",admin);
         startActivity(sai);
     }
 
@@ -213,17 +213,20 @@ public class LoginActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            updateUI(currentUser, false);
+            Boolean admin = false;
+            if (currentUser.getUid().equals("j32McX8shng4EyBWVxImeu8sK6p2"))
+                admin = true;
+            updateUI(currentUser, false, admin);
         }
     }
 
     private void reload() { }
 
-    private void updateUI(FirebaseUser user, Boolean newUser) {
+    private void updateUI(FirebaseUser user, Boolean newUser, Boolean admin) {
+        System.out.println("yes");
         if (user!=null){
-            if(newUser)
-                DocSnippets.addUser(this.binding.username.getText().toString(),this.binding.City.getText().toString());
-            switchActivities();
+                //DocSnippets.addUser(this.binding.username.getText().toString(),this.binding.City.getText().toString());
+            switchActivities(admin);
         }else{
             reload();
         }
@@ -238,18 +241,21 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            Boolean admin = false;
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            if (user.getUid().equals("j32McX8shng4EyBWVxImeu8sK6p2"))
+                                admin=true;
                             Toast.makeText(LoginActivity.this, "Authentication SUCCESS BIATCH.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(user, true);
+                            updateUI(user, true,admin);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null, false);
+                            updateUI(null, false, false);
                         }
                     }
                 });
@@ -262,17 +268,20 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        Boolean admin = false;
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user, false);
+                            if (user.getUid().equals("j32McX8shng4EyBWVxImeu8sK6p2"))
+                                admin=true;
+                            updateUI(user, false,admin);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null, false);
+                            updateUI(null, false,false);
                         }
                     }
                 });

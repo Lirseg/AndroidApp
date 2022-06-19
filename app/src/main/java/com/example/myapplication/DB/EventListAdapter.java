@@ -34,6 +34,7 @@ public class EventListAdapter extends ListAdapter<Event, EventViewHolder> {
         holder.bindRmv(current.getEventName(), a );
         holder.bindEdit(current.getEventName(),current.getEventDate(),current.getEventTimeFrom(),current.getEventTimeTo(),current.getNeeded(), a,root );
 
+        holder.bindSchedule(root, a);
 
     }
 

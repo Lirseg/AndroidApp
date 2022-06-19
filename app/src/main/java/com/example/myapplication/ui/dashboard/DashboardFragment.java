@@ -53,6 +53,7 @@ public class DashboardFragment extends Fragment {
         View root = binding.getRoot();
 
         RecyclerView recyclerView = root.findViewById(R.id.recyclerview);
+        System.out.println("this is test" + recyclerView);
         final EventListAdapter adapter = new EventListAdapter(new EventListAdapter.EventDiff(),getActivity(),root);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

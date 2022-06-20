@@ -37,6 +37,7 @@ import com.example.myapplication.databinding.FragmentDashboardBinding;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -226,10 +227,11 @@ public class DashboardFragment extends Fragment {
 
             DocSnippets.addEvent(data.getStringExtra("EVENTNAME"),data.getStringExtra("EVENTDATE"),data.getStringExtra("EVENTFROM"),data.getStringExtra("EVENTTO"),data.getStringExtra("EVENTNEEDED"));
         } else {
-            Toast.makeText(
-                    getContext(),
-                    R.string.empty_not_saved,
-                    Toast.LENGTH_LONG).show();
+            Snackbar.make(getView(),R.string.invalid_time2, Snackbar.LENGTH_SHORT).show();
+//            Toast.makeText(
+//                    getContext(),
+//                    R.string.empty_not_saved,
+//                    Toast.LENGTH_LONG).show();
         }
     }
 

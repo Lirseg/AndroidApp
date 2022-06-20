@@ -22,5 +22,6 @@
     <string name="string_texthome2">instructions///</string>
     <string name="yes_vul_time">Possible Volunteer Time Added Successfully</string>
     <string name="invalid_time">One of the parameters is empty, failed to add volunteer time</string>
+    <string name="invalid_time2">One of the parameters is empty, failed to add volunteer time</string>
 
 </resources>

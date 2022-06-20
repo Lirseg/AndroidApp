@@ -37,6 +37,7 @@ import com.example.myapplication.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -200,7 +201,8 @@ public class LoginActivity extends AppCompatActivity {
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+        Snackbar.make(getCurrentFocus(),welcome, Snackbar.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
@@ -247,7 +249,7 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             if (user.getUid().equals("j32McX8shng4EyBWVxImeu8sK6p2"))
                                 admin=true;
-                            Toast.makeText(LoginActivity.this, "Authentication SUCCESS BIATCH.",
+                            Toast.makeText(LoginActivity.this, "Authentication SUCCESS.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(user, true,admin);
                         } else {

@@ -59,6 +59,32 @@ public class DocSnippets {
 
     }
 
+    public static void userScheduleTime(String user, String date, String sTime, String fTime){
+        Map<String, Object> data = new HashMap<>();
+        data.put("user", user);
+        data.put("date", date);
+        data.put("sTime", sTime);
+        data.put("fTime", fTime);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("users")
+                .add(data)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
+
+    }
+
+
 
     public static void addUser(String email, String city, ArrayList available) {
         // [START add_ada_lovelace]

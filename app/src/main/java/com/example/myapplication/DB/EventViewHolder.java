@@ -62,6 +62,7 @@ public class EventViewHolder extends RecyclerView.ViewHolder{
     public void bindDate(String text) {
 
         eventDate.setText(text);
+        System.out.println();
 
     }
     public void bindFrom(String text) {
@@ -71,6 +72,7 @@ public class EventViewHolder extends RecyclerView.ViewHolder{
         eventTo.setText(text);
     }
     public void bindNeeded(String text) {
+        System.out.println(eventName.getText().toString());
         if (DocSnippets.isEventFull(eventName.getText().toString(),eventNeeded))
             eventNeeded.setTextColor(Color.GREEN);
         else

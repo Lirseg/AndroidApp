@@ -133,6 +133,7 @@ public class DocSnippets {
         db.collection("events").document(name).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
                 String x = task.getResult().getData().get("peopleNeeded").toString();
                 List<String> group = (List<String>) task.getResult().getData().get("signedVolun");
 

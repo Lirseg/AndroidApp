@@ -5,6 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.List;
+
 @Entity(tableName = "event_tbl")
 public class Event {
         @PrimaryKey
@@ -60,6 +62,9 @@ public class Event {
             this.mNeeded = mEventNeeded;
         }
 
+        @ColumnInfo(name = "signedVolun")
+        private List<String> mSignedVolun;
+        public List<String> getSignVolun(){return mSignedVolun;}
 
 
 
@@ -70,12 +75,13 @@ public class Event {
 
 
 
-    public Event(@NonNull String eventName, @NonNull String eventDate, @NonNull String eventTimeFrom, @NonNull String eventTimeTo, @NonNull String needed) {
+    public Event(@NonNull String eventName, @NonNull String eventDate, @NonNull String eventTimeFrom, @NonNull String eventTimeTo, @NonNull String needed ) {
             this.mEventName = eventName;
             this.mEventDate = eventDate;
             this.mEventTimeFrom = eventTimeFrom;
             this.mEventTimeTo = eventTimeTo;
             this.mNeeded = needed;
+
         }
 
 

@@ -8,6 +8,10 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.myapplication.FireBaseFireStore.DocSnippets;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -48,11 +52,18 @@ abstract class EventRoomDatabase extends RoomDatabase {
                 // If you want to start with more words, just add them.
                 EventDao dao = INSTANCE.eventDao();
                 dao.deleteAll();
+                List<String> list1 = new ArrayList<>();
+                list1.add("id1");
+                list1.add("id2");
 
-                Event word = new Event("Hello2","as","as","as","As");
+                List<String> list2 = new ArrayList<>();
+                list2.add("pP23Pb5J7nSryd4UCHevuSDENDh2");
+
+                Event word = new Event("Shovrim Shigra","20/6/2022","10:00","12:00","2");
                 dao.insert(word);
-                word = new Event("World2","as","as","as","as");
+                word = new Event("Yad La Lev","30/6/2022","12:00","15:00","2");
                 dao.insert(word);
+
             });
         }
     };

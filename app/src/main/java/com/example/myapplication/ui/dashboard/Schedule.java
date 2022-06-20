@@ -70,12 +70,11 @@ public class Schedule extends AppCompatActivity {
 
             @Override
             protected void onBindViewHolder( @NonNull usersHolder holder, int position,  @NonNull users model) {
+                System.out.println(holder.name.getText());
                 holder.name.setText(model.getName());
             }
         };
-        System.out.println(adapter);
-        System.out.println(recyclerView);
-        System.out.println(recyclerView2);
+
         recyclerView.setAdapter(adapter);
         recyclerView2.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

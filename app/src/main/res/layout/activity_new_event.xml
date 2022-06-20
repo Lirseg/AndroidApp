@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="176dp"
+        android:layout_marginTop="152dp"
         android:text="Event Name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,8 +30,8 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="312dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="300dp"
         android:text="Finish Time"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -40,58 +40,58 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="220dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="200dp"
         android:text="Date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/plain_text_input12"
-        android:layout_width="120dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="208dp"
+        android:layout_width="142dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="188dp"
         android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/plain_text_input11"
-        android:layout_width="195dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="168dp"
+        android:layout_width="196dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="136dp"
         android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/plain_text_input16"
-        android:layout_width="120dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="248dp"
+        android:layout_width="142dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="240dp"
         android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/plain_text_input17"
-        android:layout_width="120dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="296dp"
+        android:layout_width="142dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="292dp"
         android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/plain_text_input18"
-        android:layout_width="195dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="340dp"
+        android:layout_width="142dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="344dp"
         android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -100,8 +100,8 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="264dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="252dp"
         android:text="Start Time"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -118,31 +118,46 @@
 
     <Button
         android:id="@+id/button10"
-        android:layout_width="71dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="236dp"
-        android:layout_marginTop="208dp"
-        android:text="Button"
+        android:layout_width="123dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="256dp"
+        android:layout_marginTop="192dp"
+        android:text="Calendar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="71dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="236dp"
-        android:layout_marginTop="296dp"
-        android:text="Button"
+        android:layout_width="123dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="256dp"
+        android:layout_marginTop="292dp"
+        android:text="Clock"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="71dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="236dp"
-        android:layout_marginTop="248dp"
-        android:text="Button"
+        android:layout_width="123dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="256dp"
+        android:layout_marginTop="244dp"
+        android:text="Clock"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:textSize="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="177dp"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="176dp"
+        android:layout_marginBottom="71dp"
+        android:text="Add A New Event"
+        app:layout_constraintBottom_toTopOf="@+id/plain_text_input11"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -15,9 +15,12 @@
     <string name="title_home">My Calendar</string>
     <string name="title_dashboard">Schedule Time</string>
     <string name="title_notifications">Schedule Events</string>
+    <string name="title_user_notifications">Add Volunteer Time</string>
     <string name="textHome2">instructions.......</string>
     <string name="empty_not_saved">Word not saved because it is empty.</string>
     <string name="add_event">Add event</string>
     <string name="string_texthome2">instructions///</string>
+    <string name="yes_vul_time">Possible Volunteer Time Added Successfully</string>
+    <string name="invalid_time">One of the parameters is empty, failed to add volunteer time</string>
 
 </resources>

@@ -8,31 +8,11 @@
 
     <Button
         android:id="@+id/userScheduleDateBtn"
-        android:layout_width="71dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="236dp"
-        android:layout_marginTop="208dp"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/userScheduleSTimeTxt"
-        android:layout_width="120dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="248dp"
-        android:inputType="text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/userScheduleFTimeTxt"
-        android:layout_width="120dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="296dp"
-        android:inputType="text"
+        android:layout_width="114dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="252dp"
+        android:layout_marginTop="236dp"
+        android:text="Calendar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,19 +20,19 @@
         android:id="@+id/FTimeLable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="312dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="376dp"
         android:text="Finish Time"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/userScheduleFTimeBtn"
-        android:layout_width="71dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="236dp"
-        android:layout_marginTop="296dp"
-        android:text="Button"
+        android:layout_width="114dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="252dp"
+        android:layout_marginTop="360dp"
+        android:text="Clock"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,38 +40,58 @@
         android:id="@+id/STimeLable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="264dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="312dp"
         android:text="Start Time"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/DateLable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="220dp"
+        android:layout_width="48dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="252dp"
         android:text="Date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/userScheduleSTimeBtn"
-        android:layout_width="71dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="236dp"
-        android:layout_marginTop="248dp"
-        android:text="Button"
+        android:layout_width="114dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="252dp"
+        android:layout_marginTop="300dp"
+        android:text="Clock"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/userScheduleDateTxt"
-        android:layout_width="120dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="208dp"
+        android:layout_width="118dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="224dp"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/userScheduleSTimeTxt"
+        android:layout_width="118dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="288dp"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/userScheduleFTimeTxt"
+        android:layout_width="118dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="348dp"
         android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

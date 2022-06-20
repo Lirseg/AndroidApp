@@ -5,85 +5,77 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Entity(tableName = "event_tbl")
+
+
+
+
 public class Event {
-        @PrimaryKey
-        @NonNull
-        @ColumnInfo(name = "eventName")
-        private String mEventName;
-        @NonNull
-        public String getEventName() {
-            return mEventName;
+
+        private String name;
+        public String getName() {
+            return name;
+        }
+        public void setName(@NonNull String EventName) { this.name = EventName; }
+
+
+        private String date;
+        public String getDate() { return date; }
+        public void setDate(String mEventDate) {
+            this.date = mEventDate;
         }
 
-
-
-        public void setEventName(@NonNull String mEventName) {
-            this.mEventName = mEventName;
+        private String startTime;
+        public String getStartTime() {
+            return startTime;
         }
-
-        @ColumnInfo(name = "eventDate")
-        private String mEventDate;
-
-        public String getEventDate() {
-            return mEventDate;
-        }
-
-        public void setEventDate(String mEventDate) {
-            this.mEventDate = mEventDate;
-        }
-
-        @ColumnInfo(name = "eventTimeFrom")
-        private String mEventTimeFrom;
-        public String getEventTimeFrom() {
-            return mEventTimeFrom;
-        }
-        public void setEventFrom(String mEventFrom) {
-            this.mEventTimeFrom = mEventFrom;
+        public void setStartTime(String EventFrom) {
+            this.startTime = EventFrom;
         }
         @ColumnInfo(name = "eventTimeTo")
-        private String mEventTimeTo;
-        public String getEventTimeTo() {
-            return mEventTimeTo;
+        private String endTime;
+        public String getEndTime() {
+            return endTime;
         }
 
-        public void setEventTo(String mEventTo) {
-            this.mEventTimeTo = mEventTo;
+        public void setEndTime(String mEventTo) {
+            this.endTime = mEventTo;
         }
         @ColumnInfo(name = "needed")
-        private String mNeeded;
-        public String getNeeded() {
-            return mNeeded;
+        private String peopleNeeded;
+        public String getPeopleNeeded() {
+            return peopleNeeded;
         }
 
-        public void setEventNeeded(String mEventNeeded) {
-            this.mNeeded = mEventNeeded;
+        public void setPeopleNeeded(String mEventNeeded) {
+            this.peopleNeeded = mEventNeeded;
         }
 
-        @ColumnInfo(name = "signedVolun")
-        private List<String> mSignedVolun;
-        public List<String> getSignVolun(){return mSignedVolun;}
-
-
-
-
-
-
-
-
-
-
-    public Event(@NonNull String eventName, @NonNull String eventDate, @NonNull String eventTimeFrom, @NonNull String eventTimeTo, @NonNull String needed ) {
-            this.mEventName = eventName;
-            this.mEventDate = eventDate;
-            this.mEventTimeFrom = eventTimeFrom;
-            this.mEventTimeTo = eventTimeTo;
-            this.mNeeded = needed;
-
+//        @ColumnInfo(name = "signedVolun")
+        private ArrayList<String> signedVolun;
+        public ArrayList<String>  getSignedVolun() {
+            return signedVolun;
         }
 
-
+        public void setSignedVolun(ArrayList<String>  mSignedVolun) {
+        this.signedVolun = mSignedVolun;
     }
+
+    public Event(@NonNull String eventName, @NonNull String eventDate, @NonNull String eventTimeFrom, @NonNull String eventTimeTo, @NonNull String needed, @NonNull ArrayList<String>  signedVolun ) {
+            this.name = eventName;
+            this.date = eventDate;
+            this.startTime = eventTimeFrom;
+            this.endTime = eventTimeTo;
+            this.peopleNeeded = needed;
+            this.signedVolun = signedVolun;
+
+        }
+
+        public Event(){}
+
+
+
+}
 

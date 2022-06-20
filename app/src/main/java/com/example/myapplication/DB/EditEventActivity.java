@@ -24,6 +24,7 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import com.example.myapplication.FireBaseFireStore.DocSnippets;
 import com.example.myapplication.R;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class EditEventActivity extends AppCompatActivity {
@@ -35,6 +36,7 @@ public class EditEventActivity extends AppCompatActivity {
     private EditText mEditEventView3;
     private EditText mEditEventView4;
     private EditText mEditEventView5;
+    private EditText mEditEventView6;
     private EventViewModel mEventViewModel;
     DatePickerDialog datePickerDialog;
     TimePickerDialog timePickerDialog;
@@ -53,6 +55,7 @@ public class EditEventActivity extends AppCompatActivity {
         mEditEventView3 = findViewById(R.id.plain_text_input116);
         mEditEventView4 = findViewById(R.id.plain_text_input117);
         mEditEventView5 = findViewById(R.id.plain_text_input118);
+        mEditEventView6 = findViewById(R.id.PLAINTEST);
         Button btn = findViewById(R.id.button101);
         Button btn2 = findViewById(R.id.button21);
         Button btn3 = findViewById(R.id.button31);
@@ -129,6 +132,7 @@ public class EditEventActivity extends AppCompatActivity {
         mEditEventView3.setText(getIntent().getExtras().getString("From"));
         mEditEventView4.setText(getIntent().getExtras().getString("To"));
         mEditEventView5.setText(getIntent().getExtras().getString("Needed"));
+//        mEditEventView6.setText(getIntent().getExtras().getStringArray("Signed"));
 
         mEditEventView1.setEnabled(false);
         Activity activity = this;
@@ -144,9 +148,14 @@ public class EditEventActivity extends AppCompatActivity {
                 String eventFrom = mEditEventView3.getText().toString();
                 String eventTo = mEditEventView4.getText().toString();
                 String eventNeeded = mEditEventView5.getText().toString();
+                String eventSigned = mEditEventView6.getText().toString();
                 mEventViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(EventViewModel.class);
 
-                Event event = new Event(eventName,eventDate,eventFrom,eventTo,eventNeeded);
+                ArrayList<String> l = new ArrayList<String>();
+                l.add("Eitan");
+                l.add("Liran");
+
+                Event event = new Event(eventName,eventDate,eventFrom,eventTo,eventNeeded,l);
                 mEventViewModel.insert(event);
                 actionBar.setDisplayHomeAsUpEnabled(false);
                 DocSnippets.editEvent(eventName,eventDate,eventFrom,eventTo,eventNeeded);

@@ -30,7 +30,7 @@ public class EventViewModel extends AndroidViewModel {
     }
 
     public void insert(Event event) {
-        mRepository.insert(event);
+//        mRepository.insert(event);
     }
 
     public void remove(String name) {

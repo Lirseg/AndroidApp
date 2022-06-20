@@ -23,9 +23,12 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.util.ArrayList;
+
 public class Schedule extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     FirestoreRecyclerAdapter adapter;
+    FirestoreRecyclerAdapter adapter2;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -54,11 +57,39 @@ public class Schedule extends AppCompatActivity {
 
 
         //Query
-        Query query = firebaseFirestore.collection("users");
+        ArrayList<String> list = getIntent().getStringArrayListExtra("signed");
+
+        String s = getIntent().getStringExtra("date");
+        String name = getIntent().getStringExtra("name");
+
+        //upper recycler
+        Query query1 = firebaseFirestore.collection("events").whereEqualTo("name",name);
+        FirestoreRecyclerOptions<users> options = new FirestoreRecyclerOptions.Builder<users>().setQuery(query1, users.class).build();
+        adapter = new FirestoreRecyclerAdapter<users, usersHolder>(options) {
+            @NonNull
+            @Override
+            public usersHolder onCreateViewHolder( @NonNull ViewGroup viewGroup, int i) {
+                View view = LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.mysimplerow, viewGroup, false);
+
+                return new usersHolder(view);
+            }
+
+            @Override
+            protected void onBindViewHolder( @NonNull usersHolder holder, int position,  @NonNull users model) {
+                System.out.println(holder.name.getText());
+                holder.name.setText(list.toString());
+            }
+        };
+
+
+
+        //bottom recycler
+        Query query2 = firebaseFirestore.collection("users").whereNotIn("name",list).whereEqualTo("date", s);
 
         //RecOptv + adapter
-        FirestoreRecyclerOptions<users> options = new FirestoreRecyclerOptions.Builder<users>().setQuery(query, users.class).build();
-        adapter = new FirestoreRecyclerAdapter<users, usersHolder>(options) {
+        FirestoreRecyclerOptions<users> options2 = new FirestoreRecyclerOptions.Builder<users>().setQuery(query2, users.class).build();
+        adapter2 = new FirestoreRecyclerAdapter<users, usersHolder>(options2) {
             @NonNull
             @Override
             public usersHolder onCreateViewHolder( @NonNull ViewGroup viewGroup, int i) {
@@ -75,8 +106,10 @@ public class Schedule extends AppCompatActivity {
             }
         };
 
+
+
         recyclerView.setAdapter(adapter);
-        recyclerView2.setAdapter(adapter);
+        recyclerView2.setAdapter(adapter2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView2.setLayoutManager(new LinearLayoutManager(this));
 
@@ -97,15 +130,26 @@ public class Schedule extends AppCompatActivity {
         }
     }
 
+
+
+
+
     @Override
     protected void onStop() {
         super.onStop();
         adapter.stopListening();
+        adapter2.stopListening();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         adapter.startListening();
+        adapter2.startListening();
     }
+
+
+
+
+
 }

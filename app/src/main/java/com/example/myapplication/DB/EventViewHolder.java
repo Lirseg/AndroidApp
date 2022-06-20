@@ -80,6 +80,10 @@ public class EventViewHolder extends RecyclerView.ViewHolder{
         eventNeeded.setText(text);
     }
 
+    public void bindSignedVolun(String text){
+        System.out.println(text);
+    }
+
 
     public void bindRmv(String text,Activity a) {
 
@@ -100,7 +104,6 @@ public class EventViewHolder extends RecyclerView.ViewHolder{
 
             @Override
             public void onClick(View view) {
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(a);
                 builder.setTitle("Alert!");
                 builder.setMessage("Would you like to remove this event?");
@@ -110,15 +113,10 @@ public class EventViewHolder extends RecyclerView.ViewHolder{
                 // create and show the alert dialog
                 AlertDialog dialog = builder.create();
                 dialog.show();
-
-
-
-
-
             }
         });
     }
-    public void bindEdit(String Name,String Date,String From,String To,String Needed,Activity a, View root) {
+    public void bindEdit(String Name,String Date,String From,String To,String Needed,Activity a, View root, String signed) {
 
         editBtn.setOnClickListener(view -> {
             Intent intent = new Intent(root.getContext(), EditEventActivity.class);
@@ -127,6 +125,7 @@ public class EventViewHolder extends RecyclerView.ViewHolder{
             intent.putExtra("From", From);
             intent.putExtra("To", To);
             intent.putExtra("Needed", Needed);
+            intent.putExtra("signed", signed);
             a.startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
 
         });

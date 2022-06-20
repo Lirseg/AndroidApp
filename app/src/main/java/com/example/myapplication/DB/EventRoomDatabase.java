@@ -15,7 +15,9 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Event.class}, version = 1, exportSchema = false)
+
+//@Database(entities = {Event.class}, version = 2, exportSchema = false)
+
 abstract class EventRoomDatabase extends RoomDatabase {
 
     abstract EventDao eventDao();
@@ -30,13 +32,15 @@ abstract class EventRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             EventRoomDatabase.class, "word_database")
-                            .addCallback(sRoomDatabaseCallback)
+                            .addCallback(sRoomDatabaseCallback).fallbackToDestructiveMigration()
                             .build();
                 }
             }
         }
         return INSTANCE;
     }
+
+
 
     /**
      * Override the onCreate method to populate the database.
@@ -52,16 +56,16 @@ abstract class EventRoomDatabase extends RoomDatabase {
                 // If you want to start with more words, just add them.
                 EventDao dao = INSTANCE.eventDao();
                 dao.deleteAll();
-                List<String> list1 = new ArrayList<>();
+                ArrayList<String> list1 = new ArrayList<>();
                 list1.add("id1");
                 list1.add("id2");
 
-                List<String> list2 = new ArrayList<>();
+                ArrayList<String> list2 = new ArrayList<>();
                 list2.add("pP23Pb5J7nSryd4UCHevuSDENDh2");
 
-                Event word = new Event("Shovrim Shigra","20/6/2022","10:00","12:00","2");
+                Event word = new Event("Shovrim Shigra","20/6/2022","10:00","12:00","2", list1);
                 dao.insert(word);
-                word = new Event("Yad La Lev","30/6/2022","12:00","15:00","2");
+                word = new Event("Yad La Lev","30/6/2022","12:00","15:00","2",list2);
                 dao.insert(word);
 
             });

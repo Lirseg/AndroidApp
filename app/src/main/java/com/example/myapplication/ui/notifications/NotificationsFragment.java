@@ -1,10 +1,14 @@
 package com.example.myapplication.ui.notifications;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -29,6 +34,7 @@ import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentNotificationsBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -61,6 +67,7 @@ public class NotificationsFragment extends Fragment {
     Calendar calendar;
     private FirebaseAuth mAuth;
 
+    @SuppressLint("HandlerLeak")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -137,9 +144,11 @@ public class NotificationsFragment extends Fragment {
             }
         });
 
+
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 FirebaseAuth user = FirebaseAuth.getInstance();
                 System.out.println(( !mEditEventView4.getText().toString().isEmpty() && !mEditEventView3.getText().toString().isEmpty() && !mEditEventView5.getText().toString().isEmpty()));
                 if( !mEditEventView4.getText().toString().isEmpty() && !mEditEventView3.getText().toString().isEmpty() && !mEditEventView5.getText().toString().isEmpty()) {
@@ -151,6 +160,35 @@ public class NotificationsFragment extends Fragment {
                     mEditEventView5.setText("");
 
                 }
+
+                DialogInterface.OnClickListener ocl;
+                ocl = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        FirebaseAuth user = FirebaseAuth.getInstance();
+                        System.out.println(( !mEditEventView4.getText().toString().isEmpty() && !mEditEventView3.getText().toString().isEmpty() && !mEditEventView5.getText().toString().isEmpty()));
+                        if( !mEditEventView4.getText().toString().isEmpty() && !mEditEventView3.getText().toString().isEmpty() && !mEditEventView5.getText().toString().isEmpty()) {
+                            System.out.println("in");
+                            DocSnippets.userScheduleTime(user.getUid(), mEditEventView3.getText().toString(),
+                                    mEditEventView4.getText().toString(), mEditEventView5.getText().toString());
+                            mEditEventView3.setText("");
+                            mEditEventView4.setText("");
+                            mEditEventView5.setText("");
+                            Snackbar.make(view,R.string.yes_vul_time, Snackbar.LENGTH_SHORT).show();
+                        }else{
+                            Snackbar.make(view,R.string.invalid_time, Snackbar.LENGTH_SHORT).show();
+                        }
+                    }
+                };
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("New Volunteer Time");
+                builder.setMessage("Would you like to confirm these times?");
+                // add the buttons
+                builder.setPositiveButton("Continue",  ocl);
+                builder.setNegativeButton("Cancel", null);
+                // create and show the alert dialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 

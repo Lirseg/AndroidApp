@@ -24,6 +24,7 @@ import com.example.myapplication.DB.EventViewModel;
 import com.example.myapplication.FireBaseFireStore.DocSnippets;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentHomeBinding;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -31,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -87,7 +89,7 @@ public class HomeFragment extends Fragment {
 
 
         getAllEvents(events2);
-
+//        getUserEvents();
 
         Log.d(TAG, "HEYA" + events2);
         Log.d(TAG, "HEYyA" + myList);
@@ -108,7 +110,16 @@ public class HomeFragment extends Fragment {
 
     }
 
-
+//    public void getUserEvents(){
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        mAuth = FirebaseAuth.getInstance();
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        Query query = db.collection("friends");
+//        FirestoreRecyclerOptions<FriendsResponse> response = new FirestoreRecyclerOptions.Builder<FriendsResponse>()
+//                .setQuery(query, FriendsResponse.class)
+//                .build();
+//        recycleview
+//    }
 
     @Override
     public void onDestroyView() {

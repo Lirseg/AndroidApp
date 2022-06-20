@@ -152,8 +152,7 @@ public class EditEventActivity extends AppCompatActivity {
                 mEventViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(EventViewModel.class);
 
                 ArrayList<String> l = new ArrayList<String>();
-                l.add("Eitan");
-                l.add("Liran");
+
 
                 Event event = new Event(eventName,eventDate,eventFrom,eventTo,eventNeeded,l);
                 mEventViewModel.insert(event);

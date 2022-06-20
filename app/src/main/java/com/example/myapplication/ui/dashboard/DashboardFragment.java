@@ -160,6 +160,7 @@ public class DashboardFragment extends Fragment {
                         intent.putExtra("startTime", model.getStartTime());
                         intent.putExtra("endTime", model.getEndTime());
                         intent.putExtra("needed", model.getPeopleNeeded());
+                        intent.putExtra("more",String.valueOf(Integer.parseInt(model.getPeopleNeeded()) - model.getSignedVolun().size()+1));
                         startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
                     }
                 });

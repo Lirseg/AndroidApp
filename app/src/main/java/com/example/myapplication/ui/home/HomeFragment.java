@@ -137,6 +137,7 @@ public class HomeFragment extends Fragment {
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
+
                             if (!currentUser.getUid().equals("j32McX8shng4EyBWVxImeu8sK6p2") ) {
                                 if (document.getData().get("signedVolun").toString().contains(currentUser.getUid()))
                                     list.add(document.getData().get("date"));

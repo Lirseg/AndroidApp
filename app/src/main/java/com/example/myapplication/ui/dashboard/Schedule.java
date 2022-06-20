@@ -46,6 +46,7 @@ public class Schedule extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         super.onCreate(savedInstanceState);
@@ -60,7 +61,9 @@ public class Schedule extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.signView);
         RecyclerView recyclerView2 = findViewById(R.id.availView);
+        TextView tv = findViewById(R.id.textView7);
 
+        tv.setText(getIntent().getStringExtra("more"));
 
 
 
@@ -102,19 +105,20 @@ public class Schedule extends AppCompatActivity {
             protected void onBindViewHolder( @NonNull usersHolder holder, int position,  @NonNull users model) {
 
                 System.out.println(holder.name.getText());
-                holder.name.setText(list.toString());
-                holder.name.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        DocSnippets.signToEvent(name,date,startTime,finishTime,needed,holder.name.getText().toString());
-                        finish();
-                        holder.flag = !holder.flag;
-                        if(holder.flag)
-                            holder.name.setTextColor(Color.RED);
-                        else
-                            holder.name.setTextColor(Color.BLACK);
-                    }
-                });
+
+                holder.name.setText(getIntent().getStringExtra("number"));
+//                holder.name.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+////                        DocSnippets.signToEvent(name,date,startTime,finishTime,needed,holder.name.getText().toString());
+////                        finish();
+//                        holder.flag = !holder.flag;
+//                        if(holder.flag)
+//                            holder.name.setTextColor(Color.RED);
+//                        else
+//                            holder.name.setTextColor(Color.BLACK);
+//                    }
+//                });
 
             }
         };
@@ -128,9 +132,7 @@ public class Schedule extends AppCompatActivity {
         FirestoreRecyclerOptions<users> options2 = new FirestoreRecyclerOptions.Builder<users>().setQuery(query2, users.class).build();
         adapter2 = new FirestoreRecyclerAdapter<users, usersHolder>(options2) {
 
-            public void addEvent(){
 
-            }
             @NonNull
             @Override
             public usersHolder onCreateViewHolder( @NonNull ViewGroup viewGroup, int i) {

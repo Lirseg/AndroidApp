@@ -33,12 +33,13 @@ public class DocSnippets {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public static void userScheduleTime(String user, String date, String sTime, String fTime){
+    public static void userScheduleTime(String user, String date, String sTime, String fTime, String email){
         Map<String, Object> data = new HashMap<>();
         data.put("user", user);
         data.put("date", date);
         data.put("sTime", sTime);
         data.put("fTime", fTime);
+        data.put("name",email);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("users")
@@ -89,7 +90,8 @@ public class DocSnippets {
         // [START add_ada_lovelace]
         // Create a new user with a first and last name
         Map<String, Object> user = new HashMap<>();
-        List<String> group = new ArrayList<>();
+        ArrayList<String> group = new ArrayList<>();
+        group.add("j32McX8shng4EyBWVxImeu8sK6p2");
         user.put("name", name);
         user.put("peopleNeeded", peopleNeeded);
         user.put("date", date);
@@ -140,7 +142,7 @@ public class DocSnippets {
 
                 System.out.println(group.size());
 
-                if(Integer.parseInt(x) <= group.size())
+                if(Integer.parseInt(x) <= group.size()-1)
                     t.setTextColor(Color.parseColor("#228B22") );
             }
         });

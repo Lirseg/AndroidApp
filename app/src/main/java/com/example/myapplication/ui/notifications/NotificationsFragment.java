@@ -148,6 +148,19 @@ public class NotificationsFragment extends Fragment {
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                FirebaseAuth user = FirebaseAuth.getInstance();
+                System.out.println(( !mEditEventView4.getText().toString().isEmpty() && !mEditEventView3.getText().toString().isEmpty() && !mEditEventView5.getText().toString().isEmpty()));
+                if( !mEditEventView4.getText().toString().isEmpty() && !mEditEventView3.getText().toString().isEmpty() && !mEditEventView5.getText().toString().isEmpty()) {
+//                    System.out.println("in");
+                    DocSnippets.userScheduleTime(user.getUid(), mEditEventView3.getText().toString(),
+                            mEditEventView4.getText().toString(), mEditEventView5.getText().toString(), user.getUid());
+                    mEditEventView3.setText("");
+                    mEditEventView4.setText("");
+                    mEditEventView5.setText("");
+
+                }
+
                 DialogInterface.OnClickListener ocl;
                 ocl = new DialogInterface.OnClickListener() {
                     @Override

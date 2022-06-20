@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 
+import com.example.myapplication.ui.dashboard.Schedule;
 import com.example.myapplication.ui.home.HomeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -32,12 +33,13 @@ public class DocSnippets {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public static void userScheduleTime(String user, String date, String sTime, String fTime){
+    public static void userScheduleTime(String user, String date, String sTime, String fTime, String email){
         Map<String, Object> data = new HashMap<>();
         data.put("user", user);
         data.put("date", date);
         data.put("sTime", sTime);
         data.put("fTime", fTime);
+        data.put("name",email);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("users")
@@ -88,7 +90,8 @@ public class DocSnippets {
         // [START add_ada_lovelace]
         // Create a new user with a first and last name
         Map<String, Object> user = new HashMap<>();
-        List<String> group = new ArrayList<>();
+        ArrayList<String> group = new ArrayList<>();
+        group.add("j32McX8shng4EyBWVxImeu8sK6p2");
         user.put("name", name);
         user.put("peopleNeeded", peopleNeeded);
         user.put("date", date);
@@ -133,18 +136,53 @@ public class DocSnippets {
         db.collection("events").document(name).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
                 String x = task.getResult().getData().get("peopleNeeded").toString();
                 List<String> group = (List<String>) task.getResult().getData().get("signedVolun");
 
                 System.out.println(group.size());
 
-                if(Integer.parseInt(x) <= group.size())
+                if(Integer.parseInt(x) <= group.size()-1)
                     t.setTextColor(Color.parseColor("#228B22") );
             }
         });
     return result;
     }
 
+    public static void signToEvent(String name, String date, String startTime,String finishTime,String peopleNeeded, String add) {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> user = new HashMap<>();
+
+        db.collection("events").document(name).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                List<String> list = (List<String>) task.getResult().getData().get("signedVolun");
+                list.add(add);
+                user.put("name", name);
+                user.put("peopleNeeded", peopleNeeded);
+                user.put("date", date);
+                user.put("startTime", startTime);
+                user.put("endTime", finishTime);
+                user.put("signedVolun",list );
+                db.collection("events").document(name).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " );
+
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error adding document", e);
+                            }
+                        });
+            }
+        });
+
+
+    }
 
 
     public void updateList(List list){

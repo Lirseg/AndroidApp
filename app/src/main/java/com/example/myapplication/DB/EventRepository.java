@@ -33,14 +33,14 @@ public class EventRepository {
     // You must call this on a non-UI thread or your app will throw an exception. Room ensures
     // that you're not doing any long running operations on the main thread, blocking the UI.
     void insert(Event event) {
-        EventRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mEventDao.insert(event);
-        });
+//        EventRoomDatabase.databaseWriteExecutor.execute(() -> {
+//            mEventDao.insert(event);
+//        });
     }
 
     void remove(String name) {
-        EventRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mEventDao.remove(name);
-        });
+//        EventRoomDatabase.databaseWriteExecutor.execute(() -> {
+//            mEventDao.remove(name);
+//        });
     }
 }

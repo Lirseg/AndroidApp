@@ -25,14 +25,17 @@ public class EventListAdapter extends ListAdapter<Event, EventViewHolder> {
 
     @Override
     public void onBindViewHolder(EventViewHolder holder, int position) {
+
         Event current = getItem(position);
-        holder.bindName(current.getEventName());
-        holder.bindDate(current.getEventDate());
-        holder.bindFrom(current.getEventTimeFrom());
-        holder.bindTo(current.getEventTimeTo());
-        holder.bindNeeded(current.getNeeded());
-        holder.bindRmv(current.getEventName(), a );
-        holder.bindEdit(current.getEventName(),current.getEventDate(),current.getEventTimeFrom(),current.getEventTimeTo(),current.getNeeded(), a,root );
+        holder.bindName(current.getName());
+        holder.bindDate(current.getDate());
+        holder.bindFrom(current.getEndTime());
+        holder.bindTo(current.getEndTime());
+        holder.bindNeeded(current.getPeopleNeeded());
+        holder.bindRmv(current.getName(), a );
+//        holder.bindEdit(current.getEventName(),current.getEventDate(),current.getEventTimeFrom(),current.getEventTimeTo(),current.getNeeded(), a,root, current.getSignedVolun() );
+
+//        holder.bindSignedVolun(current.getSignedVolun());
 
         holder.bindSchedule(root, a);
 
@@ -47,7 +50,7 @@ public class EventListAdapter extends ListAdapter<Event, EventViewHolder> {
 
         @Override
         public boolean areContentsTheSame(@NonNull Event oldItem, @NonNull Event newItem) {
-            return oldItem.getEventName().equals(newItem.getEventName());
+            return oldItem.getName().equals(newItem.getName());
         }
     }
 

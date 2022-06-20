@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 
+import com.example.myapplication.ui.dashboard.Schedule;
 import com.example.myapplication.ui.home.HomeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -146,6 +147,40 @@ public class DocSnippets {
     return result;
     }
 
+    public static void signToEvent(String name, String date, String startTime,String finishTime,String peopleNeeded, String add) {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> user = new HashMap<>();
+
+        db.collection("events").document(name).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                List<String> list = (List<String>) task.getResult().getData().get("signedVolun");
+                list.add(add);
+                user.put("name", name);
+                user.put("peopleNeeded", peopleNeeded);
+                user.put("date", date);
+                user.put("startTime", startTime);
+                user.put("endTime", finishTime);
+                user.put("signedVolun",list );
+                db.collection("events").document(name).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " );
+
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error adding document", e);
+                            }
+                        });
+            }
+        });
+
+
+    }
 
 
     public void updateList(List list){

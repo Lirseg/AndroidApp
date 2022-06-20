@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.dashboard;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.DB.EventViewHolder;
 import com.example.myapplication.DB.users;
+import com.example.myapplication.FireBaseFireStore.DocSnippets;
 import com.example.myapplication.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -24,6 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Schedule extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
@@ -52,44 +56,81 @@ public class Schedule extends AppCompatActivity {
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        Button btn = findViewById(R.id.confSchedule);
+
         RecyclerView recyclerView = findViewById(R.id.signView);
         RecyclerView recyclerView2 = findViewById(R.id.availView);
+
+
 
 
         //Query
         ArrayList<String> list = getIntent().getStringArrayListExtra("signed");
 
-        String s = getIntent().getStringExtra("date");
+        String date = getIntent().getStringExtra("date");
         String name = getIntent().getStringExtra("name");
+        String startTime = getIntent().getStringExtra("startTime");
+        String finishTime = getIntent().getStringExtra("endTime");
+        String needed = getIntent().getStringExtra("needed");
+
 
         //upper recycler
         Query query1 = firebaseFirestore.collection("events").whereEqualTo("name",name);
         FirestoreRecyclerOptions<users> options = new FirestoreRecyclerOptions.Builder<users>().setQuery(query1, users.class).build();
         adapter = new FirestoreRecyclerAdapter<users, usersHolder>(options) {
+
+            public void deleteItem(int position){
+                getSnapshots().getSnapshot(position).getReference().delete();
+                notifyDataSetChanged();
+            }
+
             @NonNull
             @Override
             public usersHolder onCreateViewHolder( @NonNull ViewGroup viewGroup, int i) {
                 View view = LayoutInflater.from(viewGroup.getContext())
                         .inflate(R.layout.mysimplerow, viewGroup, false);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        System.out.println("YUP");
 
+                    }
+                });
                 return new usersHolder(view);
             }
-
             @Override
             protected void onBindViewHolder( @NonNull usersHolder holder, int position,  @NonNull users model) {
+
                 System.out.println(holder.name.getText());
                 holder.name.setText(list.toString());
+                holder.name.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        DocSnippets.signToEvent(name,date,startTime,finishTime,needed,holder.name.getText().toString());
+                        finish();
+                        holder.flag = !holder.flag;
+                        if(holder.flag)
+                            holder.name.setTextColor(Color.RED);
+                        else
+                            holder.name.setTextColor(Color.BLACK);
+                    }
+                });
+
             }
         };
 
 
 
         //bottom recycler
-        Query query2 = firebaseFirestore.collection("users").whereNotIn("name",list).whereEqualTo("date", s);
+        Query query2 = firebaseFirestore.collection("users").whereNotIn("name",list).whereEqualTo("date", date);
 
         //RecOptv + adapter
         FirestoreRecyclerOptions<users> options2 = new FirestoreRecyclerOptions.Builder<users>().setQuery(query2, users.class).build();
         adapter2 = new FirestoreRecyclerAdapter<users, usersHolder>(options2) {
+
+            public void addEvent(){
+
+            }
             @NonNull
             @Override
             public usersHolder onCreateViewHolder( @NonNull ViewGroup viewGroup, int i) {
@@ -103,6 +144,19 @@ public class Schedule extends AppCompatActivity {
             protected void onBindViewHolder( @NonNull usersHolder holder, int position,  @NonNull users model) {
                 System.out.println(holder.name.getText());
                 holder.name.setText(model.getName());
+                holder.name.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        DocSnippets.signToEvent(name,date,startTime,finishTime,needed,holder.name.getText().toString());
+                        finish();
+                        holder.flag = !holder.flag;
+                        if(holder.flag)
+                            holder.name.setTextColor(Color.GREEN);
+                        else
+                            holder.name.setTextColor(Color.BLACK);
+
+                    }
+                });
             }
         };
 
@@ -116,10 +170,13 @@ public class Schedule extends AppCompatActivity {
 
     }
 
+
+
     //holder
     private class usersHolder extends RecyclerView.ViewHolder {
 
         private TextView name;
+        public boolean flag=false;
 
 
         public usersHolder(@NonNull View itemView){

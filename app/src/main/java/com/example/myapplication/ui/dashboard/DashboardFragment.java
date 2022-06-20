@@ -121,6 +121,7 @@ public class DashboardFragment extends Fragment {
                 holder.eventNeeded.setText(model.getPeopleNeeded());
                 holder.eventTo.setText(model.getEndTime());
                 DocSnippets.isEventFull(model.getName().toString(),holder.eventNeeded);
+
                 holder.rmvBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -156,6 +157,9 @@ public class DashboardFragment extends Fragment {
                         intent.putExtra("signed",model.getSignedVolun());
                         intent.putExtra("date",model.getDate());
                         intent.putExtra("name",model.getName());
+                        intent.putExtra("startTime", model.getStartTime());
+                        intent.putExtra("endTime", model.getEndTime());
+                        intent.putExtra("needed", model.getPeopleNeeded());
                         startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
                     }
                 });
@@ -244,6 +248,7 @@ public class DashboardFragment extends Fragment {
 
         public usersHolder(@NonNull View itemView){
             super(itemView);
+
             eventName = itemView.findViewById(R.id.textName);
             eventDate = itemView.findViewById(R.id.textDate);
             eventFrom = itemView.findViewById(R.id.textFrom);

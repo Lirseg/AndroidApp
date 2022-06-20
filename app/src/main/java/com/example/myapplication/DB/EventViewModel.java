@@ -16,18 +16,18 @@ public class EventViewModel extends AndroidViewModel {
     // - We can put an observer on the data (instead of polling for changes) and only update the
     //   the UI when the data actually changes.
     // - Repository is completely separated from the UI through the ViewModel.
-    private final LiveData<List<Event>> mAllEvents;
+//    private final LiveData<List<Event>> mAllEvents;
 
     public EventViewModel(Application application) {
 
         super(application);
-        mRepository = new EventRepository(application);
-        mAllEvents = mRepository.getAllEvents();
+//        mRepository = new EventRepository(application);
+//        mAllEvents = mRepository.getAllEvents();
     }
 
-    public LiveData<List<Event>> getAllEvents() {
-        return mAllEvents;
-    }
+ //   public LiveData<List<Event>> getAllEvents() {
+//        return mAllEvents;
+//    }
 
     public void insert(Event event) {
 //        mRepository.insert(event);
